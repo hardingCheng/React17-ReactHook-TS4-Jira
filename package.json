@@ -11,6 +11,7 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "babel-eslint": "^10.1.0",
+    "jira-dev-tool": "^1.7.61",
     "qs": "^6.10.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -24,14 +25,36 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prepare": "husky install",
-    "json-server": "json-server __json_server_mock__/db.json --watch --port 3003"
+    "json-server": "json-server __json_server_mock__/db.json --watch --port 3003 --middlewares ./__json_server_mock__/middleware.js"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest",
       "prettier"
-    ]
+    ],
+    "rules": {
+      "semi": [
+        2,
+        "never"
+      ],
+      "array-bracket-spacing": [
+        2,
+        "always"
+      ],
+      "comma-spacing": [
+        2,
+        {
+          "before": false,
+          "after": true
+        }
+      ],
+      "quotes": [
+        1,
+        "single"
+      ],
+      "no-undef": 2
+    }
   },
   "browserslist": {
     "production": [
@@ -64,5 +87,8 @@
   },
   "lint-staged": {
     "*.{js,css,md,jsx,ts,tsx}": "prettier --write"
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }

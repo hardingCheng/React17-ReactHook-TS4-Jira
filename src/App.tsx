@@ -1,11 +1,17 @@
 import React from 'react'
 import './App.css'
-import { ProjectListScreen } from './pages/project-list'
+import { useAuth } from './pages/context/auth-context'
+import { AuthenticatedApp } from './authenticated-app'
+import { UnauthenticatedApp } from './pages/unauthenticated-app'
 
 function App() {
+  const { user } = useAuth()
   return (
     <div className="App">
-      <ProjectListScreen />
+      {
+        // 根据User来判断  是什么样类型的App
+        user ? <AuthenticatedApp /> : <UnauthenticatedApp />
+      }
     </div>
   )
 }

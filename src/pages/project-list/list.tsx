@@ -17,13 +17,12 @@ export const List = ({ list, users }: ListProps) => {
         </tr>
       </thead>
       <tbody>
-        s
-        {list.map((project) => {
+        {list.map(project => {
           return (
             <tr key={project.id}>
               <td>{project.name}</td>
               <td>
-                {users.find((user) => user.id === project.personId)?.name ||
+                {users.find(user => user.id === project.personId)?.name ||
                   '未知'}
               </td>
             </tr>
