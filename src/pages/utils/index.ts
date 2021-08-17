@@ -9,7 +9,7 @@ export const isVoid = (value: unknown) =>
 export const cleanObject = (object: { [key: string]: unknown }) => {
   // 不操作原来的对象，自己的生成一个对象
   const result = { ...object }
-  Object.keys(result).forEach((key) => {
+  Object.keys(result).forEach(key => {
     const value = result[key]
     if (isVoid(value)) {
       delete result[key]
@@ -38,4 +38,20 @@ export const useDebounce = <V>(value: V, delay?: number) => {
   }, [value, delay])
 
   return debouncedValue
+}
+
+export const useArray = <T>(initialArray: T[]) => {
+  // 不修改原来的值
+  const [value, setValue] = useState(initialArray)
+  return {
+    value,
+    setValue,
+    add: (item: T) => setValue([...value, item]),
+    clear: () => setValue([]),
+    removeIndex: (index: number) => {
+      const copy = [...value]
+      copy.splice(index, 1)
+      setValue(copy)
+    },
+  }
 }

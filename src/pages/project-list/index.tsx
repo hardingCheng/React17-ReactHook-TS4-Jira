@@ -32,7 +32,7 @@ export const ProjectListScreen = () => {
   useEffect(() => {
     fetch(
       `${apiUrl}/projects?${qs.stringify(cleanObject(debouncedParam))}`
-    ).then(async (response) => {
+    ).then(async response => {
       if (response.ok) {
         setList(await response.json())
       }
@@ -40,7 +40,7 @@ export const ProjectListScreen = () => {
   })
   //行为
   useEffect(() => {
-    fetch(`${apiUrl}/users`).then(async (response) => {
+    fetch(`${apiUrl}/users`).then(async response => {
       if (response.ok) {
         setUsers(await response.json())
       }
