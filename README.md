@@ -22,3 +22,7 @@ yarn add @craco/craco
 +   "test": "craco test",
 }
 ```
+
+## css in js
+
+css in js 解决方案：https://emotion.sh/docs/introduction
