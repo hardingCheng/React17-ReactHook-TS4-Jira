@@ -26,7 +26,7 @@ export const SearchPanel = ({ param, setParam, users }: SearchPanelProps) => {
         <input
           type="text"
           value={param.name}
-          onChange={(event) =>
+          onChange={event =>
             setParam({
               ...param,
               name: event.target.value,
@@ -35,7 +35,7 @@ export const SearchPanel = ({ param, setParam, users }: SearchPanelProps) => {
         />
         <select
           value={param.personId}
-          onChange={(event) =>
+          onChange={event =>
             setParam({
               ...param,
               personId: event.target.value,
@@ -43,7 +43,7 @@ export const SearchPanel = ({ param, setParam, users }: SearchPanelProps) => {
           }
         >
           <option value="">负责人</option>
-          {users.map((item) => (
+          {users.map(item => (
             <option key={item.id} value={item.id}>
               {item.name}
             </option>
