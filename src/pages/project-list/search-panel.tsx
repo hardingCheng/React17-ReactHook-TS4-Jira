@@ -1,22 +1,22 @@
-import React from "react";
+import React from 'react'
 
 export interface User {
-  id: number;
-  name: string;
-  email: string;
-  title: string;
-  organization: string;
-  token: string;
+  id: number
+  name: string
+  email: string
+  title: string
+  organization: string
+  token: string
 }
 
 //告诉别人我的参数是什么样子的
 interface SearchPanelProps {
-  users: User[];
+  users: User[]
   param: {
-    name: string;
-    personId: string;
-  };
-  setParam: (param: SearchPanelProps["param"]) => void;
+    name: string
+    personId: string
+  }
+  setParam: (param: SearchPanelProps['param']) => void
 }
 
 export const SearchPanel = ({ param, setParam, users }: SearchPanelProps) => {
@@ -51,5 +51,5 @@ export const SearchPanel = ({ param, setParam, users }: SearchPanelProps) => {
         </select>
       </div>
     </form>
-  );
-};
+  )
+}
