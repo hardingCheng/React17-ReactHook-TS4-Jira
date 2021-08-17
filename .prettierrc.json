@@ -1,11 +1,1 @@
-{
-  "semi": false,
-  "singleQuote": true,
-  "arrowParens": "avoid",
-  "bracketSpacing": true,
-  "eslintIntegration": false,
-  "ignorePath": ".prettierignore",
-  "jsxBracketSameLine": false,
-  "jsxSingleQuote": false,
-  "trailingComma": "es5"
-}
+{}
