@@ -29,30 +29,30 @@ export const useMount = (callback: () => void) => {
 // 后面用泛型来规范类型
 // 防抖
 export const useDebounce = <V>(value: V, delay?: number) => {
-  const [debouncedValue, setDebouncedValue] = useState(value)
+  const [ debouncedValue, setDebouncedValue ] = useState(value)
 
   useEffect(() => {
     // 每次在value变化以后，设置一个定时器
     const timeout = setTimeout(() => setDebouncedValue(value), delay)
     // 每次在上一个useEffect处理完以后再运行s
     return () => clearTimeout(timeout)
-  }, [value, delay])
+  }, [ value, delay ])
 
   return debouncedValue
 }
 
 export const useArray = <T>(initialArray: T[]) => {
   // 不修改原来的值
-  const [value, setValue] = useState(initialArray)
+  const [ value, setValue ] = useState(initialArray)
   return {
     value,
     setValue,
-    add: (item: T) => setValue([...value, item]),
+    add: (item: T) => setValue([ ...value, item ]),
     clear: () => setValue([]),
     removeIndex: (index: number) => {
-      const copy = [...value]
+      const copy = [ ...value ]
       copy.splice(index, 1)
       setValue(copy)
-    },
+    }
   }
 }

@@ -1,22 +1,22 @@
 import React from 'react'
 
 export interface User {
-  id: number
-  name: string
-  email: string
-  title: string
-  organization: string
-  token: string
+  id: number;
+  name: string;
+  email: string;
+  title: string;
+  organization: string;
+  token: string;
 }
 
 //告诉别人我的参数是什么样子的
 interface SearchPanelProps {
-  users: User[]
+  users: User[];
   param: {
     name: string
     personId: string
-  }
-  setParam: (param: SearchPanelProps['param']) => void
+  };
+  setParam: (param: SearchPanelProps['param']) => void;
 }
 
 export const SearchPanel = ({ param, setParam, users }: SearchPanelProps) => {
@@ -26,24 +26,24 @@ export const SearchPanel = ({ param, setParam, users }: SearchPanelProps) => {
         <input
           type="text"
           value={param.name}
-          onChange={event =>
+          onChange={(event) =>
             setParam({
               ...param,
-              name: event.target.value,
+              name: event.target.value
             })
           }
         />
         <select
           value={param.personId}
-          onChange={event =>
+          onChange={(event) =>
             setParam({
               ...param,
-              personId: event.target.value,
+              personId: event.target.value
             })
           }
         >
           <option value="">负责人</option>
-          {users.map(item => (
+          {users.map((item) => (
             <option key={item.id} value={item.id}>
               {item.name}
             </option>

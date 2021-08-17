@@ -5,15 +5,15 @@ import * as auth from '../auth-provider'
 import { useMount } from '../../utils'
 
 interface AuthForm {
-  username: string
-  password: string
+  username: string;
+  password: string;
 }
 
 interface AuthContextProps {
-  user: User | null
-  register: (form: AuthForm) => Promise<void>
-  login: (form: AuthForm) => Promise<void>
-  logout: () => Promise<void>
+  user: User | null;
+  register: (form: AuthForm) => Promise<void>;
+  login: (form: AuthForm) => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 // 初始化用户，防止刷新又没了，除非登出
@@ -32,7 +32,7 @@ const AuthContext = React.createContext<AuthContextProps | undefined>(undefined)
 AuthContext.displayName = 'AuthContext'
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null)
+  const [ user, setUser ] = useState<User | null>(null)
   const login = (form: AuthForm) => auth.login(form).then(setUser)
   const register = (form: AuthForm) => auth.register(form).then(setUser)
   const logout = () => auth.logout().then(() => setUser(null))

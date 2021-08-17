@@ -4,8 +4,8 @@ import { Signup } from './signup'
 
 export const UnauthenticatedApp = () => {
   // 用来切换登录注册状态的
-  const [isRegister, setIsRegister] = useState(true)
-  const [error, setError] = useState<Error | null>(null)
+  const [ isRegister, setIsRegister ] = useState(true)
+  const [ error, setError ] = useState<Error | null>(null)
 
   return (
     <div>

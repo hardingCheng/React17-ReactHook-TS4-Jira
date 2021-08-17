@@ -6,8 +6,8 @@ const apiUrl = process.env.REACT_APP_API_URL
 
 // eslint-disable-next-line no-undef
 interface Config extends RequestInit {
-  token?: string
-  data?: object
+  token?: string;
+  data?: object;
 }
 
 export const http = (
@@ -18,9 +18,9 @@ export const http = (
     method: 'GET',
     headers: {
       Authorization: token ? `Bearer ${token}` : '',
-      'Content-Type': data ? 'application/json' : '',
+      'Content-Type': data ? 'application/json' : ''
     },
-    ...customConfig,
+    ...customConfig
   }
   if (config.method.toUpperCase() === 'GET') {
     endpoint += `?${qs.stringify(data)}`
@@ -47,6 +47,6 @@ export const http = (
 export const useHttp = () => {
   const { user } = useAuth()
   // utility type 的用法：用泛型给它传入一个其他类型，然后utility type对这个类型进行某种操作
-  return (...[endpoint, config]: Parameters<typeof http>) =>
+  return (...[ endpoint, config ]: Parameters<typeof http>) =>
     http(endpoint, { ...config, token: user?.token })
 }

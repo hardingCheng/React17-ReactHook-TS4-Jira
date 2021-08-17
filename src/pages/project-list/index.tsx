@@ -8,28 +8,28 @@ import { useHttp } from '../../utils/http'
 // 我们希望，在静态代码中，就能找到其中的一些错误 -> 强类型   TypeScript
 
 export interface Project {
-  id: number
-  name: string
-  personId: number
-  pin: boolean
-  organization: string
-  created: number
+  id: number;
+  name: string;
+  personId: number;
+  pin: boolean;
+  organization: string;
+  created: number;
 }
 
 export const ProjectListScreen = () => {
   //状态 其实就是Vue里的data
-  const [param, setParam] = useState({
+  const [ param, setParam ] = useState({
     name: '',
-    personId: '',
+    personId: ''
   })
   const debouncedParam = useDebounce(param, 200)
-  const [list, setList] = useState([])
-  const [users, setUsers] = useState([])
+  const [ list, setList ] = useState([])
+  const [ users, setUsers ] = useState([])
   const http = useHttp()
   //行为
   useEffect(() => {
     http('projects', { data: cleanObject(debouncedParam) }).then(setList)
-  }, [debouncedParam])
+  }, [ debouncedParam ])
   //行为
   useEffect(() => {
     http('users').then(setUsers)
