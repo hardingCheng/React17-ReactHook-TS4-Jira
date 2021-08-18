@@ -22,7 +22,7 @@ interface SearchPanelProps {
 
 export const SearchPanel = ({ param, setParam, users }: SearchPanelProps) => {
   return (
-    <Form>
+    <Form style={{ marginBottom: '2rem' }} layout={'inline'}>
       <Form.Item>
         <Input
           type="text"
@@ -34,6 +34,8 @@ export const SearchPanel = ({ param, setParam, users }: SearchPanelProps) => {
             })
           }
         />
+      </Form.Item>
+      <Form.Item>
         <Select
           value={param.personId}
           onChange={(value) =>

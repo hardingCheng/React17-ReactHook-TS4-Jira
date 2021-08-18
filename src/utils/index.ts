@@ -1,11 +1,12 @@
+// useEffect依赖项里加上callback会造成无限循环，这个和useCallback以及useMemo有关系
 // 出入的参数都要进行类型定义
 import { useEffect, useState } from 'react'
 
-const apiUrl = process.env.REACT_APP_API_URL
 export const isVoid = (value: unknown) =>
   value === undefined || value === null || value === ''
 
 // 在一个函数里，改变传入的对象本身是不好的
+// object就要这种键值对的形式{ [key: string]: unknown }
 export const cleanObject = (object: { [key: string]: unknown }) => {
   // 不操作原来的对象，自己的生成一个对象
   const result = { ...object }

@@ -1,7 +1,8 @@
 import React from 'react'
 import { Project } from './index'
 import { User } from './search-panel'
-import { Table } from 'antd'
+import { Button, Dropdown, Menu, Table } from 'antd'
+import dayjs from 'dayjs'
 
 interface ListProps {
   list: Project[];
@@ -13,46 +14,67 @@ interface ListProps {
 // }
 
 export const List = ({ list, users }: ListProps) => {
-  return <Table pagination={false} columns={[
-    {
-      title: '名称',
-      dataIndex: 'name',
-      sorter: (a, b) => a.name.localeCompare(b.name)
-    },
-    {
-      title: '负责人',
-      render(value, project) {
-        return (
-          <span>
+  return (
+    <Table
+      rowKey={'id'}
+      pagination={false}
+      dataSource={list}
+      columns={[
+        {
+          title: '名称',
+          // render(value, project) {
+          //   const id = project.id.toString()
+          //   return <Link to={id}>{project.name}</Link>
+          // },
+          dataIndex: 'name',
+          sorter: (a, b) => a.name.localeCompare(b.name)
+        },
+        {
+          title: '部门 ',
+          dataIndex: 'organization'
+        },
+        {
+          title: '负责人',
+          render(value, project) {
+            return (
+              <span>
                 {users.find((user) => user.id === project.personId)?.name ||
                 '未知'}
               </span>
-        )
-      }
-    } ]} dataSource={list}>
-
-  </Table>
-  return (
-    <Table style={{ margin: '0  auto' }}>
-      <thead>
-      <tr>
-        <th>负责人</th>
-        <th>名称</th>
-      </tr>
-      </thead>
-      <tbody>
-      {list.map(project => {
-        return (
-          <tr key={project.id}>
-            <td>{project.name}</td>
-            <td>
-              {users.find(user => user.id === project.personId)?.name ||
-              '未知'}
-            </td>
-          </tr>
-        )
-      })}
-      </tbody>
-    </Table>
+            )
+          }
+        },
+        {
+          title: '创建时间',
+          render(value, project) {
+            return (
+              <span>
+                {project.created
+                  ? dayjs(project.created).format('YYYY-MM-DD')
+                  : '无'}
+              </span>
+            )
+          }
+        },
+        {
+          render(value, project) {
+            return (
+              <Dropdown
+                overlay={
+                  <Menu>
+                    <Menu.Item key={'edit'}>编辑</Menu.Item>
+                    <Menu.Item key={'add'}>
+                      <Button type={'link'}>删除</Button>
+                    </Menu.Item>
+                  </Menu>
+                }
+              >
+                <Button type={'link'}>....</Button>
+              </Dropdown>
+            )
+          }
+        }
+      ]}
+    />
   )
 }

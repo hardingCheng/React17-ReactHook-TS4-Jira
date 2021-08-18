@@ -10,7 +10,7 @@ import right from 'assets/right.svg'
 export const UnauthenticatedApp = () => {
   // 用来切换登录注册状态的
   const [ isRegister, setIsRegister ] = useState(true)
-  const [ error, setError ] = useState<Error | null>(null)
+  // const [ error, setError ] = useState<Error | null>(null)
 
   return (
     <Container>
@@ -20,9 +20,9 @@ export const UnauthenticatedApp = () => {
         <Title>{isRegister ? '请登录' : '请注册'}</Title>
         {isRegister ? <Login /> : <Signup />}
         <Divider />
-        <a onClick={() => setIsRegister(!isRegister)}>
+        <Button type={'link'} onClick={() => setIsRegister(!isRegister)}>
           {isRegister ? '有账号？注册新账号' : '已经有账号了？直接登录'}
-        </a>
+        </Button>
       </ShadowCard>
     </Container>
   )

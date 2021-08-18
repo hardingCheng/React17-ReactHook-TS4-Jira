@@ -4,7 +4,7 @@ import { Form, Input } from 'antd'
 import { LongButton } from './index'
 
 export const Login = () => {
-  const { login, user } = useAuth()
+  const { login } = useAuth()
   const handleSubmit = (values: { username: string, password: string }) => {
     login(values)
   }
