@@ -6,23 +6,24 @@ import React from 'react'
 import { useAuth } from '../context/auth-context'
 // 可以把svg当做组件使用
 import { ReactComponent as SoftwareLogo } from 'assets/software-logo.svg'
+import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom'
+import { ProjectDetail } from '../project'
+import { resetRoute } from '../../utils'
 
 export const AuthenticatedApp = () => {
   return (
     <Container>
       <PageHeader />
       <Main>
-        <ProjectListScreen />
-        {/*<Router>*/}
-        {/*  <Routes>*/}
-        {/*    <Route path={'/projects'} element={<ProjectListScreen />} />*/}
-        {/*    <Route*/}
-        {/*      path={'/projects/:projectId/*'}*/}
-        {/*      element={}*/}
-        {/*    />*/}
-        {/*    <Navigate to={'/projects'} />*/}
-        {/*  </Routes>*/}
-        {/*</Router>*/}
+        <Router>
+          <Routes>
+            <Route path={'/projects'} element={<ProjectListScreen />} />
+            <Route
+              path={'/projects/:projectId/*'} element={<ProjectDetail />}
+            />
+            <Navigate to={'/projects'} />
+          </Routes>
+        </Router>
       </Main>
     </Container>
   )
@@ -33,7 +34,7 @@ const PageHeader = () => {
   return (
     <Header between={true}>
       <HeaderLeft gap={true}>
-        <Button type={'link'}>
+        <Button type={'link'} onClick={resetRoute}>
           <SoftwareLogo width={'18rem'} color={'rgb(38, 132, 255)'} />
         </Button>
         <h2>项目</h2>

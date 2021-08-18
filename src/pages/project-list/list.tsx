@@ -3,6 +3,10 @@ import { Project } from './index'
 import { User } from './search-panel'
 import { Button, Dropdown, Menu, Table, TableProps } from 'antd'
 import dayjs from 'dayjs'
+// react-router React Router 核心
+// react-router-dom 用于 DOM 绑定的 React Router
+import { Link } from 'react-router-dom'
+
 
 //  ListProps = TableProps上面的属性 + 自定义的
 interface ListProps extends TableProps<Project> {
@@ -18,11 +22,11 @@ export const List = ({ users, ...props }: ListProps) => {
       columns={[
         {
           title: '名称',
-          // render(value, project) {
-          //   const id = project.id.toString()
-          //   return <Link to={id}>{project.name}</Link>
-          // },
-          dataIndex: 'name',
+          render(value, project) {
+            const id = project.id.toString()
+            // 在一个Route下使用Link  会自动当做当前的子路由  /project   => /projetc/5
+            return <Link to={id}>{project.name}</Link>
+          },
           sorter: (a, b) => a.name.localeCompare(b.name)
         },
         {
