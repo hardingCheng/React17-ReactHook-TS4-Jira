@@ -26,3 +26,7 @@ yarn add @craco/craco
 ## css in js
 
 css in js 解决方案：https://emotion.sh/docs/introduction
+
+## 错误边界
+
+https://github.com/bvaughn/react-error-boundary
