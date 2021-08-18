@@ -1,24 +1,20 @@
 import React from 'react'
 import { Project } from './index'
 import { User } from './search-panel'
-import { Button, Dropdown, Menu, Table } from 'antd'
+import { Button, Dropdown, Menu, Table, TableProps } from 'antd'
 import dayjs from 'dayjs'
 
-interface ListProps {
-  list: Project[];
+//  ListProps = TableProps上面的属性 + 自定义的
+interface ListProps extends TableProps<Project> {
   users: User[];
 }
 
-// interface ListProps extends ColumnsType<Project> {
-//   users: User[];
-// }
 
-export const List = ({ list, users }: ListProps) => {
+export const List = ({ users, ...props }: ListProps) => {
   return (
     <Table
       rowKey={'id'}
       pagination={false}
-      dataSource={list}
       columns={[
         {
           title: '名称',
@@ -75,6 +71,7 @@ export const List = ({ list, users }: ListProps) => {
           }
         }
       ]}
+      {...props}
     />
   )
 }

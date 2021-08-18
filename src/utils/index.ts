@@ -30,7 +30,7 @@ export const useMount = (callback: () => void) => {
 // 后面用泛型来规范类型
 // 防抖
 export const useDebounce = <V>(value: V, delay?: number) => {
-  const [ debouncedValue, setDebouncedValue ] = useState(value)
+  const [ debouncedValue, setDebouncedValue ] = useState<V>(value)
 
   useEffect(() => {
     // 每次在value变化以后，设置一个定时器

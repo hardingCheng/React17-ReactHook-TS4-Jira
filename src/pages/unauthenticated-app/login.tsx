@@ -3,10 +3,14 @@ import { useAuth } from '../context/auth-context'
 import { Form, Input } from 'antd'
 import { LongButton } from './index'
 
-export const Login = () => {
+export const Login = ({ onError }: { onError: (error: Error) => void }) => {
   const { login } = useAuth()
-  const handleSubmit = (values: { username: string, password: string }) => {
-    login(values)
+  const handleSubmit = async (values: { username: string, password: string }) => {
+    try {
+      await login(values)
+    } catch (e) {
+      onError(e)
+    }
   }
   return (
     <Form onFinish={handleSubmit}>

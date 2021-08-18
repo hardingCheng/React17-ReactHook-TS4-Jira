@@ -3,10 +3,14 @@ import { useAuth } from '../context/auth-context'
 import { Form, Input } from 'antd'
 import { LongButton } from './index'
 
-export const Signup = () => {
+export const Signup = ({ onError }: { onError: (error: Error) => void }) => {
   const { register } = useAuth()
   const handleSubmit = (values: { username: string, password: string }) => {
-    register(values)
+    try {
+      register(values)
+    } catch (e) {
+      onError(e)
+    }
   }
   return (
     <Form onFinish={handleSubmit}>
