@@ -1,6 +1,6 @@
 // useEffect依赖项里加上callback会造成无限循环，这个和useCallback以及useMemo有关系
 // 出入的参数都要进行类型定义
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export const isVoid = (value: unknown) =>
   value === undefined || value === null || value === ''
@@ -56,4 +56,29 @@ export const useArray = <T>(initialArray: T[]) => {
       setValue(copy)
     }
   }
+}
+
+
+export const useDocumentTitle = (
+  title: string,
+  keepOnUnmount: boolean = true
+) => {
+  // useRef 返回一个可变的 ref 对象，其 .current 属性被初始化为传入的参数（initialValue）。返回的 ref 对象在组件的整个生命周期内持续存在。
+  // useRef 会在每次渲染时返回同一个 ref 对象。
+  const oldTitle = useRef(document.title).current
+  // 页面第一次加载的时候 oldTitle === 旧的Title 'Jira 任务管理系统'
+  // 加载之后 oldTitle === 新的Title （只要一加载 oldTitle就是最新的值）  const oldTitle = document.title
+  useEffect(() => {
+    // 修改之后会导致页面重新渲染
+    document.title = title
+  }, [ title ])
+
+  useEffect(() => {
+    return () => {
+      if (!keepOnUnmount) {
+        // 如果不指定依赖就会 读取到旧的Title
+        document.title = oldTitle
+      }
+    }
+  }, [ keepOnUnmount, oldTitle ])
 }
