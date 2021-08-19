@@ -6,20 +6,38 @@ import dayjs from 'dayjs'
 // react-router React Router 核心
 // react-router-dom 用于 DOM 绑定的 React Router
 import { Link } from 'react-router-dom'
+import { Pin } from 'components/pin'
+import { useEditProject } from 'utils/use-project'
 
 
 //  ListProps = TableProps上面的属性 + 自定义的
 interface ListProps extends TableProps<Project> {
   users: User[];
+  refresh?: () => unknown;
 }
 
 
 export const List = ({ users, ...props }: ListProps) => {
+  const { mutate } = useEditProject()
+  const pinProject = (id: number) => (pin: boolean) =>
+    mutate({ id, pin }).then(props.refresh)
   return (
     <Table
       rowKey={'id'}
       pagination={false}
       columns={[
+        {
+          title: <Pin checked={true} disabled={true} />,
+          render(value, project) {
+            return (
+              <Pin
+                checked={project.pin}
+                // pin => mutate({id:xxx,pin})
+                onCheckedChange={pinProject(project.id)}
+              />
+            )
+          }
+        },
         {
           title: '名称',
           render(value, project) {

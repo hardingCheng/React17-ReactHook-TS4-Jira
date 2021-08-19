@@ -6,7 +6,7 @@ import { cleanObject, subset } from 'utils'
  * 返回页面url中，指定键的参数值  获取url中的参数
  */
 // K extends string  K 必须是 string
-export const useProjectsSearchParams = <K extends string>(keys: K[]) => {
+export const useUrlQueryParam = <K extends string>(keys: K[]) => {
   const [ searchParams, setSearchParam ] = useSearchParams()
   return [
     /*
