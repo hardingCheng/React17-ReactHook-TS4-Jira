@@ -1,49 +1,49 @@
 import { useHttp } from './http'
 import { useAsync } from './use-async'
-import { useCallback, useEffect } from 'react'
+import { useCallback,useEffect } from 'react'
 import { cleanObject } from './index'
 import { Project } from '../pages/project-list'
 
-export const useProjects = (param?: Partial<Project>) => {
+export const useProjects = ( param?: Partial<Project> ) => {
   const http = useHttp()
-  const { run, ...result } = useAsync<Project[]>()
-  const fetchProjectUrl = useCallback(() => http('projects', { data: cleanObject(param || {}) }), [ http, param ])
+  const { run,...result } = useAsync<Project[]>()
+  const fetchProjectUrl = useCallback( () => http( 'projects',{ data: cleanObject( param || {} ) } ),[ http,param ] )
   //行为
-  useEffect(() => {
-    run(fetchProjectUrl(), { retry: fetchProjectUrl })
-  }, [ fetchProjectUrl, param, run ])
+  useEffect( () => {
+    run( fetchProjectUrl(),{ retry: fetchProjectUrl } )
+  },[ fetchProjectUrl,param,run ] )
   return result
 }
 // React Hook 只能放在最顶层
 export const useEditProject = () => {
   const http = useHttp(),
-    { run, ...result } = useAsync<Project[]>(),
-    mutate = (params: Partial<Project>) => {
+    { run,...result } = useAsync<Project[]>(),
+    mutate = ( params: Partial<Project> ) => {
       return run(
-        http(`projects/${params.id}`, {
+        http( `projects/${ params.id }`,{
           data: params,
-          method: 'PATCH'
-        })
+          method: 'PATCH',
+        } ),
       )
     }
   return {
     mutate,
-    ...result
+    ...result,
   }
 }
 export const useAddProject = () => {
   const http = useHttp()
-  const { run, ...result } = useAsync<Project[]>()
-  const mutate = (params: Partial<Project>) => {
+  const { run,...result } = useAsync<Project[]>()
+  const mutate = ( params: Partial<Project> ) => {
     return run(
-      http(`projects/${params.id}`, {
+      http( `projects/${ params.id }`,{
         data: params,
-        method: 'POST'
-      })
+        method: 'POST',
+      } ),
     )
   }
   return {
     mutate,
-    ...result
+    ...result,
   }
 }

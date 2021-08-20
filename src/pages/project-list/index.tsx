@@ -20,7 +20,7 @@ export interface Project {
   created: number;
 }
 
-export const ProjectListScreen = () => {
+export const ProjectListScreen = ( props: { projectButton: JSX.Element } ) => {
   //状态 其实就是Vue里的data
   // const [param,setParam ] = useState({
   //   name: '',
@@ -28,17 +28,18 @@ export const ProjectListScreen = () => {
   // })
   // 基本类型，可以放到依赖里；组件状态，可以放到依赖里（useState创建的）；非组件状态的   对象（对象，数组，函数等） ，绝不可以放到依赖里，会造成死循环渲染
   // https://codesandbox.io/s/keen-wave-tlz9s?file=/src/App.js
-  const [ param, setParam ] = useProjectsSearchParams()
-  const debouncedParam = useDebounce(param, 200)
-  const { isLoading, error, data: list, retry } = useProjects(debouncedParam)
+  const [ param,setParam ] = useProjectsSearchParams()
+  const debouncedParam = useDebounce( param,200 )
+  const { isLoading,error,data: list,retry } = useProjects( debouncedParam )
   const { data: users } = useUsers()
   return (
     <Container>
-      <Row between={true}>
+      <Row between={ true }>
         <h1>项目列表</h1>
+        { props.projectButton }
       </Row>
-      <SearchPanel param={param} setParam={setParam} users={users || []} />
-      <List refresh={retry} dataSource={list || []} users={users || []} loading={isLoading} />
+      <SearchPanel param={ param } setParam={ setParam } users={ users || [] } />
+      <List { ...props } refresh={ retry } dataSource={ list || [] } users={ users || [] } loading={ isLoading } />
     </Container>
   )
 }

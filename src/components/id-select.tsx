@@ -5,12 +5,12 @@ import { Raw } from '../type'
 // Select所有的props 类型都扒出来
 type SelectProps = React.ComponentProps<typeof Select>;
 
-interface IdSelectProps extends Omit<SelectProps, 'value' | 'onChange' | 'options'> {
+interface IdSelectProps extends Omit<SelectProps,'value' | 'onChange' | 'options'> {
   value: Raw;
-  onChange: (value?: number) => void;
+  onChange: ( value?: number ) => void;
   // 默认选项
   defaultOptionName?: string;
-  options?: { name: string; id: number }[];
+  options?: { name: string;id: number }[];
 }
 
 /**
@@ -21,25 +21,25 @@ interface IdSelectProps extends Omit<SelectProps, 'value' | 'onChange' | 'option
  * @param props
  * @constructor
  */
-export const IdSelect = (props: IdSelectProps) => {
-  const { value, onChange, defaultOptionName, options, ...restProps } = props
+export const IdSelect = ( props: IdSelectProps ) => {
+  const { value,onChange,defaultOptionName,options,...restProps } = props
   return (
     <Select
-      value={options?.length ? toNumber(value) : 0}
-      onChange={(value) => onChange(toNumber(value) || undefined)}
+      value={ options?.length ? toNumber( value ) : 0 }
+      onChange={ ( value ) => onChange( toNumber( value ) || undefined ) }
       // 可以透传属性
-      {...restProps}
+      { ...restProps }
     >
-      {defaultOptionName ? (
-        <Select.Option value={0}>{defaultOptionName}</Select.Option>
-      ) : null}
-      {options?.map((option) => (
-        <Select.Option key={option.id} value={option.id}>
-          {option.name}
+      { defaultOptionName ? (
+        <Select.Option value={ 0 }>{ defaultOptionName }</Select.Option>
+      ) : null }
+      { options?.map( ( option ) => (
+        <Select.Option key={ option.id } value={ option.id }>
+          { option.name }
         </Select.Option>
-      ))}
+      ) ) }
     </Select>
   )
 }
 
-const toNumber = (value: unknown) => (isNaN(Number(value)) ? 0 : Number(value))
+const toNumber = ( value: unknown ) => (isNaN( Number( value ) ) ? 0 : Number( value ))

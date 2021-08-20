@@ -10,9 +10,9 @@ function App() {
   const { user } = useAuth()
   return (
     <div className="App">
-      {/*错误边界  fallbackRender遇到错误的时候需要渲染的UI FullPageErrorFallback*/}
-      <ErrorBoundary fallbackRender={FullPageErrorFallback}>
-        {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
+      {/*错误边界  fallbackRender遇到错误的时候需要渲染的UI FullPageErrorFallback*/ }
+      <ErrorBoundary fallbackRender={ FullPageErrorFallback }>
+        { user ? <AuthenticatedApp /> : <UnauthenticatedApp /> }
       </ErrorBoundary>
     </div>
   )
