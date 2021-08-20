@@ -5,9 +5,9 @@ import { LongButton } from './index'
 
 export const Signup = ( { onError }: { onError: ( error: Error ) => void } ) => {
   const { register } = useAuth()
-  const handleSubmit = ( values: { username: string,password: string } ) => {
+  const handleSubmit = async ( values: { username: string,password: string } ) => {
     try {
-      register( values )
+      await register( values )
     } catch ( e ) {
       onError( e )
     }

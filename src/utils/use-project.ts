@@ -11,9 +11,10 @@ export const useProjects = ( param?: Partial<Project> ) => {
   //行为
   useEffect( () => {
     run( fetchProjectUrl(),{ retry: fetchProjectUrl } )
-  },[ fetchProjectUrl,param,run ] )
+  },[ fetchProjectUrl,run ] )
   return result
 }
+
 // React Hook 只能放在最顶层
 export const useEditProject = () => {
   const http = useHttp(),

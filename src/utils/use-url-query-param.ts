@@ -19,8 +19,8 @@ export const useUrlQueryParam = <K extends string>( keys: K[] ) => {
         subset( Object.fromEntries( searchParams ),keys ) as {
           [key in K]: string;
         },
-      // eslint-disable-next-line react-hooks/exhaustive-deps
       // 只有 searchParams改变的时候才去执行上面的操作
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       [ searchParams ],
     ),
     // 传一个对象，对象的值必须限定在 K 中 { [key in K]: unknown }

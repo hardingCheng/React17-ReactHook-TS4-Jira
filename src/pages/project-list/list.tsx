@@ -14,7 +14,6 @@ import { useEditProject } from 'utils/use-project'
 interface ListProps extends TableProps<Project> {
   users: User[];
   refresh?: () => unknown;
-  projectButton: JSX.Element;
 }
 
 
