@@ -1,68 +1,48 @@
-import React,{ useState } from 'react'
+import React from 'react'
 import styled from '@emotion/styled'
-import { Button,Dropdown,Menu } from 'antd'
-import { ButtonNoPadding,Row } from 'components/lib'
+import { Button, Dropdown, Menu } from 'antd'
+import { Row } from 'components/lib'
 import { ProjectListScreen } from 'pages/project-list'
 import { useAuth } from '../context/auth-context'
 // 可以把svg当做组件使用
 import { ReactComponent as SoftwareLogo } from 'assets/software-logo.svg'
-import { BrowserRouter as Router,Navigate,Route,Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom'
 import { ProjectDetail } from '../project'
 import { resetRoute } from '../../utils'
 import { ProjectModal } from 'pages/project-list/project-modal'
 import { ProjectPopover } from 'components/project-popover'
 
 export const AuthenticatedApp = () => {
-  const [ projectModalOpen,setProjectModalOpen ] = useState( false )
+
   return (
     <Container>
-      <PageHeader projectButton={
-        <ButtonNoPadding
-          onClick={ () => setProjectModalOpen( true ) }
-          type={ 'link' }
-        >
-          创建项目
-        </ButtonNoPadding>
-      } />
-      <Main>
-        <Router>
+      <Router>
+        <PageHeader />
+        <Main>
           <Routes>
-            <Route path={ '/projects' } element={
-              <ProjectListScreen
-                // 组合组件  来实现状态共享  就不会产生props一级一级往下传
-                projectButton={
-                  <ButtonNoPadding
-                    onClick={ () => setProjectModalOpen( true ) }
-                    type={ 'link' }
-                  >
-                    创建项目
-                  </ButtonNoPadding>
-                } /> }
+            <Route path={ '/projects' } element={ <ProjectListScreen /> }
             />
             <Route
               path={ '/projects/:projectId/*' } element={ <ProjectDetail /> }
             />
             <Navigate to={ '/projects' } />
           </Routes>
-        </Router>
-      </Main>
-      <ProjectModal
-        projectModalOpen={ projectModalOpen }
-        onClose={ () => setProjectModalOpen( false ) }
-      />
+        </Main>
+        <ProjectModal />
+      </Router>
     </Container>
   )
 }
 
 // eslint-disable-next-line no-undef
-const PageHeader = ( props: { projectButton: JSX.Element } ) => {
+const PageHeader = () => {
   return (
     <Header between={ true }>
       <HeaderLeft gap={ true }>
         <Button type={ 'link' } onClick={ resetRoute }>
           <SoftwareLogo width={ '18rem' } color={ 'rgb(38, 132, 255)' } />
         </Button>
-        <ProjectPopover { ...props } />
+        <ProjectPopover />
         <h2>用户</h2>
       </HeaderLeft>
       <HeaderRight>
@@ -73,7 +53,7 @@ const PageHeader = ( props: { projectButton: JSX.Element } ) => {
 }
 
 const User = () => {
-  const { logout,user } = useAuth()
+  const { logout, user } = useAuth()
   return (
     <Dropdown
       overlay={
