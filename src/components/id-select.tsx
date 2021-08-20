@@ -5,12 +5,12 @@ import { Raw } from '../type'
 // Select所有的props 类型都扒出来
 type SelectProps = React.ComponentProps<typeof Select>;
 
-interface IdSelectProps extends Omit<SelectProps,'value' | 'onChange' | 'options'> {
-  value: Raw;
-  onChange: ( value?: number ) => void;
+interface IdSelectProps extends Omit<SelectProps, 'value' | 'onChange' | 'options'> {
+  value?: Raw;
+  onChange?: ( value?: number ) => void;
   // 默认选项
   defaultOptionName?: string;
-  options?: { name: string;id: number }[];
+  options?: { name: string; id: number }[];
 }
 
 /**
@@ -22,11 +22,11 @@ interface IdSelectProps extends Omit<SelectProps,'value' | 'onChange' | 'options
  * @constructor
  */
 export const IdSelect = ( props: IdSelectProps ) => {
-  const { value,onChange,defaultOptionName,options,...restProps } = props
+  const { value, onChange, defaultOptionName, options, ...restProps } = props
   return (
     <Select
       value={ options?.length ? toNumber( value ) : 0 }
-      onChange={ ( value ) => onChange( toNumber( value ) || undefined ) }
+      onChange={ ( value ) => onChange?.( toNumber( value ) || undefined ) }
       // 可以透传属性
       { ...restProps }
     >

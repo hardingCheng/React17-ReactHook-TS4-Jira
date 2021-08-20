@@ -2,7 +2,7 @@ import React from 'react'
 import { SearchPanel } from './search-panel'
 import { List } from './list'
 import { useDebounce } from '../../utils'
-import { ButtonNoPadding, Row } from 'components/lib'
+import { ButtonNoPadding, ErrorBox, Row } from 'components/lib'
 import styled from '@emotion/styled'
 import { useProjects } from '../../utils/use-project'
 import { useUsers } from '../../utils/use-user'
@@ -31,7 +31,7 @@ export const ProjectListScreen = () => {
   const { open } = useProjectModalUrl()
   const [ param, setParam ] = useProjectsSearchParams()
   const debouncedParam = useDebounce( param, 200 )
-  const { isLoading, data: list, retry } = useProjects( debouncedParam )
+  const { isLoading, data: list, error } = useProjects( debouncedParam )
   const { data: users } = useUsers()
   return (
     <Container>
@@ -45,7 +45,8 @@ export const ProjectListScreen = () => {
         </ButtonNoPadding>
       </Row>
       <SearchPanel param={ param } setParam={ setParam } users={ users || [] } />
-      <List refresh={ retry } dataSource={ list || [] } users={ users || [] } loading={ isLoading } />
+      <ErrorBox error={ error } />
+      <List dataSource={ list || [] } users={ users || [] } loading={ isLoading } />
     </Container>
   )
 }

@@ -1,10 +1,10 @@
 import { User } from 'pages/project-list/search-panel'
-import React,{ ReactNode,useContext } from 'react'
+import React, { ReactNode, useContext } from 'react'
 import { http } from 'utils/http'
 import * as auth from '../auth-provider'
 import { useMount } from '../../utils'
 import { useAsync } from '../../utils/use-async'
-import { FullPageErrorFallback,FullPageLoading } from 'components/lib'
+import { FullPageErrorFallback, FullPageLoading } from 'components/lib'
 
 interface AuthForm {
   username: string;
@@ -24,7 +24,7 @@ const bootstrapUser = async () => {
   const token = auth.getToken()
   if ( token ) {
     // 使用app是因为我们想自己指定token
-    const data = await http( 'me',{ token } )
+    const data = await http( 'me', { token } )
     user = data.user
   }
   return user
@@ -41,7 +41,6 @@ export const AuthProvider = ( { children }: { children: ReactNode } ) => {
     isLoading,
     isError,
     isIdle,
-    isSuccess,
     data: user,
     setData: setUser,
   } = useAsync<User | null>()
@@ -64,7 +63,7 @@ export const AuthProvider = ( { children }: { children: ReactNode } ) => {
   return (
     <AuthContext.Provider
       children={ children }
-      value={ { user,login,register,logout } }
+      value={ { user, login, register, logout } }
     />
   )
 }

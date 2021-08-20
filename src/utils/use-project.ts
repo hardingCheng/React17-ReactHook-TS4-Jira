@@ -1,49 +1,44 @@
 import { useHttp } from './http'
-import { useAsync } from './use-async'
-import { useCallback,useEffect } from 'react'
-import { cleanObject } from './index'
 import { Project } from '../pages/project-list'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
 
 export const useProjects = ( param?: Partial<Project> ) => {
   const http = useHttp()
-  const { run,...result } = useAsync<Project[]>()
-  const fetchProjectUrl = useCallback( () => http( 'projects',{ data: cleanObject( param || {} ) } ),[ http,param ] )
-  //行为
-  useEffect( () => {
-    run( fetchProjectUrl(),{ retry: fetchProjectUrl } )
-  },[ fetchProjectUrl,param,run ] )
-  return result
+  // 'projects', param 谁变化 就触发
+  return useQuery<Project[], Error>( [ 'projects', param ], () => http( 'projects', { data: param } ) )
 }
 // React Hook 只能放在最顶层
 export const useEditProject = () => {
-  const http = useHttp(),
-    { run,...result } = useAsync<Project[]>(),
-    mutate = ( params: Partial<Project> ) => {
-      return run(
-        http( `projects/${ params.id }`,{
-          data: params,
-          method: 'PATCH',
-        } ),
-      )
-    }
-  return {
-    mutate,
-    ...result,
-  }
+  const http = useHttp()
+  const queryClient = useQueryClient()
+  return useMutation(
+    ( params: Partial<Project> ) => http( `projects/${ params.id }`, {
+      method: 'PATCH',
+      data: params,
+    } ), {
+      onSuccess: () => queryClient.invalidateQueries( 'projects' ),
+    },
+  )
 }
 export const useAddProject = () => {
   const http = useHttp()
-  const { run,...result } = useAsync<Project[]>()
-  const mutate = ( params: Partial<Project> ) => {
-    return run(
-      http( `projects/${ params.id }`,{
-        data: params,
-        method: 'POST',
-      } ),
-    )
-  }
-  return {
-    mutate,
-    ...result,
-  }
+  const queryClient = useQueryClient()
+  return useMutation(
+    ( params: Partial<Project> ) => http( `projects/${ params.id }`, {
+      data: params,
+      method: 'POST',
+    } ), {
+      onSuccess: () => queryClient.invalidateQueries( 'projects' ),
+    },
+  )
+}
+
+export const useProject = ( id?: number ) => {
+  const client = useHttp()
+  return useQuery<Project>(
+    [ 'projects', { id } ],
+    () => client( `projects/${ id }` ),
+    {
+      enabled: Boolean( id ),
+    } )
 }

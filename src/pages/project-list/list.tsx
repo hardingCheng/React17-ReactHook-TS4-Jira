@@ -13,14 +13,13 @@ import { useEditProject } from 'utils/use-project'
 //  ListProps = TableProps上面的属性 + 自定义的
 interface ListProps extends TableProps<Project> {
   users: User[];
-  refresh?: () => unknown;
 }
 
 
 export const List = ( { users, ...props }: ListProps ) => {
   const { mutate } = useEditProject()
   const pinProject = ( id: number ) => ( pin: boolean ) =>
-    mutate( { id, pin } ).then( props.refresh )
+    mutate( { id, pin } )
   return (
     <Table
       rowKey={ 'id' }
