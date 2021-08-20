@@ -47,26 +47,26 @@ https://github.com/bvaughn/react-error-boundary
 3. useEffect使用的时候注意
 
 ```js
-import React, { useEffect, useState } from "react";
+import React,{ useEffect,useState } from "react";
 import "./styles.css";
 // 基本类型，可以放到依赖里；组件状态，可以放到依赖里（useState创建的）；非组件状态的   对象（对象，数组，函数等） ，绝不可以放到依赖里，会造成死循环渲染
 export default function App() {
   // 当obj是基本类型的时候，就不会无限循环
   // 当 obj是对象的时候，就会无限循环
   // 当 obj 是对象的state时，不会无限循环
-  const [ obj, setObj ] = useState({ name: "Jack" });
+  const [ obj,setObj ] = useState( { name: "Jack" } );
   // const obj = 1;
   // const obj = {name: 'Jack'}
-  const [ num, setNum ] = useState(0);
+  const [ num,setNum ] = useState( 0 );
 
-  useEffect(() => {
-    console.log("effect");
-    setNum(num + 1);
-  }, [ obj ]);
+  useEffect( () => {
+    console.log( "effect" );
+    setNum( num + 1 );
+  },[ obj ] );
 
   return (
     <div className="App">
-      {num}
+      { num }
       <h1>Hello CodeSandbox</h1>
       <h2>Start editing to see some magic happen!</h2>
     </div>
@@ -76,4 +76,5 @@ export default function App() {
 
 ## useMemo和useCallback
 
-在写自定义hook的时候要返回函数的时候（useCallback）， 当我们使用了非基本类型的依赖，我们使用useMemo和useCallback来限制住
+默认情况下, 父组件的状态(state)发生变化,不仅会重新渲染自己,还会重新渲染其子组件。 在写自定义hook的时候要返回函数的时候（useCallback），
+当我们使用了非基本类型的依赖，我们使用useMemo和useCallback来限制住
