@@ -1,18 +1,17 @@
 import { useHttp } from './http'
 import { useAsync } from './use-async'
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { cleanObject } from './index'
 import { Project } from '../pages/project-list'
 
 export const useProjects = (param?: Partial<Project>) => {
   const http = useHttp()
   const { run, ...result } = useAsync<Project[]>()
-  const fetchProjectUrl = () => http('projects', { data: cleanObject(param || {}) })
+  const fetchProjectUrl = useCallback(() => http('projects', { data: cleanObject(param || {}) }), [ http, param ])
   //行为
   useEffect(() => {
     run(fetchProjectUrl(), { retry: fetchProjectUrl })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ param ])
+  }, [ fetchProjectUrl, param, run ])
   return result
 }
 // React Hook 只能放在最顶层

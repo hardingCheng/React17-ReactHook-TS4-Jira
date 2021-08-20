@@ -73,3 +73,7 @@ export default function App() {
   );
 }
 ```
+
+## useMemo和useCallback
+
+在写自定义hook的时候要返回函数的时候（useCallback）， 当我们使用了非基本类型的依赖，我们使用useMemo和useCallback来限制住
