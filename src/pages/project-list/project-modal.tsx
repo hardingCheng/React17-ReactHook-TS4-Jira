@@ -1,9 +1,9 @@
 import React from 'react'
 import { Button, Drawer } from 'antd'
-import { useProjectModal } from './project-utils'
+import { useProjectModalUrl } from './project-utils'
 
 export const ProjectModal = () => {
-  const { projectCreate, close } = useProjectModal()
+  const { projectCreate, close } = useProjectModalUrl()
   return (
     <Drawer
       onClose={ close }

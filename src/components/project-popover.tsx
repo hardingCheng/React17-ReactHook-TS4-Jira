@@ -3,12 +3,12 @@ import { Divider, List, Popover, Typography } from 'antd'
 import { useProjects } from '../utils/use-project'
 import styled from '@emotion/styled'
 import { ButtonNoPadding } from './lib'
-import { useProjectModal } from '../pages/project-list/project-utils'
+import { useProjectModalUrl } from '../pages/project-list/project-utils'
 
 
 // eslint-disable-next-line no-undef
 export const ProjectPopover = () => {
-  const { open } = useProjectModal()
+  const { open } = useProjectModalUrl()
   const { data: projects } = useProjects()
   const pinnedProjects = projects?.filter( ( project ) => project.pin )
   const content = (

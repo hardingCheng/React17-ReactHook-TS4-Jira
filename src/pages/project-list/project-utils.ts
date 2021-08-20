@@ -14,7 +14,7 @@ export const useProjectsSearchParams = () => {
   ] as const
 }
 
-export const useProjectModal = () => {
+export const useProjectModalUrl = () => {
   const [ { projectCreate }, setProjectCreate ] = useUrlQueryParam( [ 'projectCreate' ] )
   const open = () => setProjectCreate( { projectCreate: true } )
   const close = () => setProjectCreate( { projectCreate: undefined } )
