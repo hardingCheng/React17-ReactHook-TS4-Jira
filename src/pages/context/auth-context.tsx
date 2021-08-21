@@ -1,4 +1,3 @@
-import { User } from 'pages/project-list/search-panel'
 import React, { ReactNode, useContext } from 'react'
 import { http } from 'utils/http'
 import * as auth from '../auth-provider'
@@ -6,6 +5,7 @@ import { useMount } from '../../utils'
 import { useAsync } from '../../utils/use-async'
 import { FullPageErrorFallback, FullPageLoading } from 'components/lib'
 import { useQueryClient } from 'react-query'
+import { User } from '../../type/users'
 
 interface AuthForm {
   username: string;

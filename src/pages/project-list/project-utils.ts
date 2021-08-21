@@ -1,4 +1,4 @@
-import { useUrlQueryParam } from 'utils/use-url-query-param'
+import { useSetUrlSearchParam, useUrlQueryParam } from 'utils/use-url-query-param'
 import { useMemo } from 'react'
 import { useProject } from '../../utils/use-project'
 
@@ -23,18 +23,11 @@ export const useProjectModal = () => {
   const [ { projectCreate }, setProjectCreate ] = useUrlQueryParam( [ 'projectCreate' ] )
   const [ { editingProjectId }, setEditingProjectId ] = useUrlQueryParam( [ 'editingProjectId' ] )
   const { data: editingProject, isLoading } = useProject( Number( editingProjectId ) )
-  const open = () => {
-    setProjectCreate( { projectCreate: true } )
-  }
-  const close = () => {
-    if ( editingProjectId ) {
-      setEditingProjectId( { editingProjectId: undefined } )
-    }
-    if ( projectCreate ) {
-      setProjectCreate( { projectCreate: undefined } )
-    }
-  }
-  const startEditId = ( id: number ) => setEditingProjectId( { editingProjectId: id } )
+  const setUrlParams = useSetUrlSearchParam()
+  const open = () => setProjectCreate( { projectCreate: true } )
+  const close = () => setUrlParams( { projectCreate: '', editingProjectId: '' } )
+  const startEditId = ( id: number ) =>
+    setEditingProjectId( { editingProjectId: id } )
   return {
     projectModalOpen: projectCreate === 'true' || Boolean( editingProjectId ),
     open,

@@ -1,25 +1,17 @@
 import React from 'react'
-import { Form,Input } from 'antd'
-import { Project } from './index'
+import { Form, Input } from 'antd'
 import { UserSelect } from 'components/user-select'
-
-export interface User {
-  id: number;
-  name: string;
-  email: string;
-  title: string;
-  organization: string;
-  token: string;
-}
+import { Project } from '../../type/projects'
+import { User } from '../../type/users'
 
 //告诉别人我的参数是什么样子的
 interface SearchPanelProps {
   users: User[];
-  param: Partial<Pick<Project,'name' | 'personId'>>;
+  param: Partial<Pick<Project, 'name' | 'personId'>>;
   setParam: ( param: SearchPanelProps['param'] ) => void;
 }
 
-export const SearchPanel = ( { param,setParam,users }: SearchPanelProps ) => {
+export const SearchPanel = ( { param, setParam, users }: SearchPanelProps ) => {
   return (
     <Form style={ { marginBottom: '2rem' } } layout={ 'inline' }>
       <Form.Item>

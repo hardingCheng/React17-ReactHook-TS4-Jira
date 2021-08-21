@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { URLSearchParamsInit, useSearchParams } from 'react-router-dom'
 import { cleanObject, subset } from 'utils'
 
@@ -7,7 +7,9 @@ import { cleanObject, subset } from 'utils'
  */
 // K extends string  K 必须是 string
 export const useUrlQueryParam = <K extends string>( keys: K[] ) => {
-  const [ searchParams, setSearchParam ] = useSearchParams()
+  const [ searchParams ] = useSearchParams()
+  const setSearchParams = useSetUrlSearchParam()
+  const [ stateKeys ] = useState( keys )
   return [
     /*
     把“创建”函数和依赖项数组作为参数传入 useMemo，它仅会在某个依赖项改变时才重新计算 memoized 值。这种优化有助于避免在每次渲染时都进行高开销的计算。
@@ -16,22 +18,30 @@ export const useUrlQueryParam = <K extends string>( keys: K[] ) => {
      */
     useMemo(
       () =>
-        subset( Object.fromEntries( searchParams ), keys ) as {
+        subset( Object.fromEntries( searchParams ), stateKeys ) as {
           [key in K]: string;
         },
       // 只有 searchParams改变的时候才去执行上面的操作
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      [ searchParams ],
+      [ searchParams, stateKeys ],
     ),
     // 传一个对象，对象的值必须限定在 K 中 { [key in K]: unknown }
     ( params: Partial<{ [key in K]: unknown }> ) => {
       // iterator
       // iterator: https://codesandbox.io/s/upbeat-wood-bum3j?file=/src/index.js
-      const o = cleanObject( {
-        ...Object.fromEntries( searchParams ),
-        ...params,
-      } ) as URLSearchParamsInit
-      return setSearchParam( o )
+      return setSearchParams( params )
     },
   ] as const
+}
+
+
+export const useSetUrlSearchParam = () => {
+  const [ searchParams, setSearchParam ] = useSearchParams()
+  return ( params: { [key in string]: unknown } ) => {
+    const o = cleanObject( {
+      ...Object.fromEntries( searchParams ),
+      ...params,
+    } ) as URLSearchParamsInit
+    return setSearchParam( o )
+  }
 }

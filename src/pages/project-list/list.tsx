@@ -1,6 +1,4 @@
 import React from 'react'
-import { Project } from './index'
-import { User } from './search-panel'
 import { Dropdown, Menu, Modal, Table, TableProps } from 'antd'
 import dayjs from 'dayjs'
 // react-router React Router 核心
@@ -10,6 +8,8 @@ import { Pin } from 'components/pin'
 import { useDeleteProject, useEditProject } from 'utils/use-project'
 import { useProjectModal, useProjectsQueryKey } from './project-utils'
 import { ButtonNoPadding } from 'components/lib'
+import { Project } from '../../type/projects'
+import { User } from '../../type/users'
 
 
 //  ListProps = TableProps上面的属性 + 自定义的
