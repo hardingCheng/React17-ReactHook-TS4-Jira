@@ -1,6 +1,7 @@
 import { useHttp } from './http'
 import { Project } from '../pages/project-list'
-import { useMutation, useQuery, useQueryClient } from 'react-query'
+import { QueryKey, useMutation, useQuery } from 'react-query'
+import { useAddConfig, useDeleteConfig, useEditConfig } from './use-optimistic-update'
 
 export const useProjects = ( param?: Partial<Project> ) => {
   const http = useHttp()
@@ -8,37 +9,49 @@ export const useProjects = ( param?: Partial<Project> ) => {
   return useQuery<Project[], Error>( [ 'projects', param ], () => http( 'projects', { data: param } ) )
 }
 // React Hook 只能放在最顶层
-export const useEditProject = () => {
-  const http = useHttp()
-  const queryClient = useQueryClient()
+export const useEditProject = ( queryKey: QueryKey ) => {
+  const client = useHttp()
   return useMutation(
-    ( params: Partial<Project> ) => http( `projects/${ params.id }`, {
-      method: 'PATCH',
-      data: params,
-    } ), {
-      onSuccess: () => queryClient.invalidateQueries( 'projects' ),
-    },
+    ( params: Partial<Project> ) =>
+      client( `projects/${ params.id }`, {
+        method: 'PATCH',
+        data: params,
+      } ),
+    useEditConfig( queryKey ),
   )
 }
-export const useAddProject = () => {
-  const http = useHttp()
-  const queryClient = useQueryClient()
+export const useAddProject = ( queryKey: QueryKey ) => {
+  const client = useHttp()
+
   return useMutation(
-    ( params: Partial<Project> ) => http( `projects/${ params.id }`, {
-      data: params,
-      method: 'POST',
-    } ), {
-      onSuccess: () => queryClient.invalidateQueries( 'projects' ),
-    },
+    ( params: Partial<Project> ) =>
+      client( `projects`, {
+        data: params,
+        method: 'POST',
+      } ),
+    useAddConfig( queryKey ),
+  )
+}
+
+export const useDeleteProject = ( queryKey: QueryKey ) => {
+  const client = useHttp()
+
+  return useMutation(
+    ( { id }: { id: number } ) =>
+      client( `projects/${ id }`, {
+        method: 'DELETE',
+      } ),
+    useDeleteConfig( queryKey ),
   )
 }
 
 export const useProject = ( id?: number ) => {
   const client = useHttp()
   return useQuery<Project>(
-    [ 'projects', { id } ],
+    [ 'project', { id } ],
     () => client( `projects/${ id }` ),
     {
       enabled: Boolean( id ),
-    } )
+    },
+  )
 }

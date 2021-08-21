@@ -15,18 +15,29 @@ export const useProjectsSearchParams = () => {
   ] as const
 }
 
-export const useProjectModalUrl = () => {
-  const [ { projectModalOpen }, setProjectModalOpen ] = useUrlQueryParam( [ 'projectModalOpen' ] )
+export const useProjectsQueryKey = () => {
+  const [ params ] = useProjectsSearchParams()
+  return [ 'projects', params ]
+}
+
+export const useProjectModal = () => {
+  const [ { projectCreate }, setProjectCreate ] = useUrlQueryParam( [ 'projectCreate' ] )
   const [ { editingProjectId }, setEditingProjectId ] = useUrlQueryParam( [ 'editingProjectId' ] )
   const { data: editingProject, isLoading } = useProject( Number( editingProjectId ) )
-  const open = () => setProjectModalOpen( { projectModalOpen: true } )
+  const open = () => {
+    setProjectCreate( { projectCreate: true } )
+  }
   const close = () => {
-    setProjectModalOpen( { projectModalOpen: undefined } )
-    setEditingProjectId( { editingProjectId: undefined } )
+    if ( editingProjectId ) {
+      setEditingProjectId( { editingProjectId: undefined } )
+    }
+    if ( projectCreate ) {
+      setProjectCreate( { projectCreate: undefined } )
+    }
   }
   const startEditId = ( id: number ) => setEditingProjectId( { editingProjectId: id } )
   return {
-    projectModalOpen: projectModalOpen === 'true' || Boolean( editingProjectId ),
+    projectModalOpen: projectCreate === 'true' || Boolean( editingProjectId ),
     open,
     close,
     startEditId,

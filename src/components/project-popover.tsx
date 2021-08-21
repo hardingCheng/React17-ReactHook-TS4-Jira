@@ -3,12 +3,12 @@ import { Divider, List, Popover, Typography } from 'antd'
 import { useProjects } from '../utils/use-project'
 import styled from '@emotion/styled'
 import { ButtonNoPadding } from './lib'
-import { useProjectModalUrl } from '../pages/project-list/project-utils'
+import { useProjectModal } from '../pages/project-list/project-utils'
 
 
 // eslint-disable-next-line no-undef
 export const ProjectPopover = () => {
-  const { open } = useProjectModalUrl()
+  const { open } = useProjectModal()
   const { data: projects } = useProjects()
   const pinnedProjects = projects?.filter( ( project ) => project.pin )
   const content = (
@@ -16,7 +16,7 @@ export const ProjectPopover = () => {
       <Typography.Text type={ 'secondary' }>收藏项目</Typography.Text>
       <List>
         { pinnedProjects?.map( ( project ) => (
-          <List.Item>
+          <List.Item key={ project.personId }>
             <List.Item.Meta title={ project.name } />
           </List.Item>
         ) ) }

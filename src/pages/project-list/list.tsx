@@ -1,13 +1,15 @@
 import React from 'react'
 import { Project } from './index'
 import { User } from './search-panel'
-import { Button, Dropdown, Menu, Table, TableProps } from 'antd'
+import { Dropdown, Menu, Modal, Table, TableProps } from 'antd'
 import dayjs from 'dayjs'
 // react-router React Router 核心
 // react-router-dom 用于 DOM 绑定的 React Router
 import { Link } from 'react-router-dom'
 import { Pin } from 'components/pin'
-import { useEditProject } from 'utils/use-project'
+import { useDeleteProject, useEditProject } from 'utils/use-project'
+import { useProjectModal, useProjectsQueryKey } from './project-utils'
+import { ButtonNoPadding } from 'components/lib'
 
 
 //  ListProps = TableProps上面的属性 + 自定义的
@@ -17,9 +19,8 @@ interface ListProps extends TableProps<Project> {
 
 
 export const List = ( { users, ...props }: ListProps ) => {
-  const { mutate } = useEditProject()
-  const pinProject = ( id: number ) => ( pin: boolean ) =>
-    mutate( { id, pin } )
+  const { mutate } = useEditProject( useProjectsQueryKey() )
+  const pinProject = ( id: number ) => ( pin: boolean ) => mutate( { id, pin } )
   return (
     <Table
       rowKey={ 'id' }
@@ -40,9 +41,8 @@ export const List = ( { users, ...props }: ListProps ) => {
         {
           title: '名称',
           render( value, project ) {
-            const id = project.id.toString()
             // 在一个Route下使用Link  会自动当做当前的子路由  /project   => /projetc/5
-            return <Link to={ id }>{ project.name }</Link>
+            return <Link to={ String( project.id ) }>{ project.name }</Link>
           },
           sorter: ( a, b ) => a.name.localeCompare( b.name ),
         },
@@ -75,26 +75,46 @@ export const List = ( { users, ...props }: ListProps ) => {
         },
         {
           render( value, project ) {
-            return (
-              <Dropdown
-                overlay={
-                  <Menu>
-                    <Menu.Item key={ 'edit' }>
-                      <Button type={ 'link' }>编辑</Button>
-                    </Menu.Item>
-                    <Menu.Item key={ 'add' }>
-                      <Button type={ 'link' }>删除</Button>
-                    </Menu.Item>
-                  </Menu>
-                }
-              >
-                <Button type={ 'link' }>....</Button>
-              </Dropdown>
-            )
+            return <More project={ project } />
           },
         },
       ] }
       { ...props }
     />
+  )
+}
+
+const More = ( { project }: { project: Project } ) => {
+  const { startEditId } = useProjectModal()
+  const editProject = ( id: number ) => () => startEditId( id )
+  const { mutate: deleteProject } = useDeleteProject( useProjectsQueryKey() )
+  const confirmDeleteProject = ( id: number ) => {
+    Modal.confirm( {
+      title: '确定删除这个项目吗?',
+      content: '点击确定删除',
+      okText: '确定',
+      onOk() {
+        deleteProject( { id } )
+      },
+    } )
+  }
+  return (
+    <Dropdown
+      overlay={
+        <Menu>
+          <Menu.Item onClick={ editProject( project.id ) } key={ 'edit' }>
+            编辑
+          </Menu.Item>
+          <Menu.Item
+            onClick={ () => confirmDeleteProject( project.id ) }
+            key={ 'delete' }
+          >
+            删除
+          </Menu.Item>
+        </Menu>
+      }
+    >
+      <ButtonNoPadding type={ 'link' }>...</ButtonNoPadding>
+    </Dropdown>
   )
 }
