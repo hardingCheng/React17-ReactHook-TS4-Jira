@@ -3,7 +3,8 @@ import { Project } from 'type/projects'
 import { Task } from 'type/task'
 import { useDebounce } from 'utils'
 import { useHttp } from './http'
-import { useAddConfig, useDeleteConfig, useEditConfig } from './use-optimistic-update'
+import { SortProps } from './use-kanban'
+import { useAddConfig, useDeleteConfig, useEditConfig, useReorderTaskConfig } from './use-optimistic-update'
 
 export const useTasks = ( param?: Partial<Task> ) => {
   const client = useHttp()
@@ -57,12 +58,12 @@ export const useDeleteTask = ( queryKey: QueryKey ) => {
   )
 }
 
-// export const useReorderTask = ( queryKey: QueryKey ) => {
-//   const client = useHttp()
-//   return useMutation( ( params: SortProps ) => {
-//     return client( 'tasks/reorder', {
-//       data: params,
-//       method: 'POST',
-//     } )
-//   }, useReorderTaskConfig( queryKey ) )
-// }
+export const useReorderTask = ( queryKey: QueryKey ) => {
+  const client = useHttp()
+  return useMutation( ( params: SortProps ) => {
+    return client( 'tasks/reorder', {
+      data: params,
+      method: 'POST',
+    } )
+  }, useReorderTaskConfig( queryKey ) )
+}
