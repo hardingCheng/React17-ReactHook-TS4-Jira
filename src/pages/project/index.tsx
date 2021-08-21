@@ -1,9 +1,9 @@
 import styled from '@emotion/styled'
 import { Menu } from 'antd'
-import { Epic } from 'pages/epic'
 import { Kanban } from 'pages/kanban'
 import React from 'react'
 import { Link, Navigate, Route, Routes, useLocation } from 'react-router-dom'
+import { EpicScreen } from '../epic'
 
 //根据路由来看 选择哪个菜单
 const useRouteType = () => {
@@ -32,7 +32,7 @@ export const ProjectDetail = () => {
           {/*projects/:projectId/kanban*/ }
           <Route path={ '/kanban' } element={ <Kanban /> } />
           {/*projects/:projectId/epic*/ }
-          <Route path={ '/epic' } element={ <Epic /> } />
+          <Route path={ '/epic' } element={ <EpicScreen /> } />
           <Navigate to={ '/kanban' } replace={ true } />
         </Routes>
       </Main>

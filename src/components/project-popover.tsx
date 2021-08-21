@@ -9,7 +9,7 @@ import { useProjectModal } from '../pages/project-list/project-utils'
 // eslint-disable-next-line no-undef
 export const ProjectPopover = () => {
   const { open } = useProjectModal()
-  const { data: projects } = useProjects()
+  const { data: projects, refetch } = useProjects()
   const pinnedProjects = projects?.filter( ( project ) => project.pin )
   const content = (
     <ContentContainer>
@@ -31,7 +31,7 @@ export const ProjectPopover = () => {
     </ContentContainer>
   )
   return (
-    <Popover placement={ 'bottom' } content={ content }>
+    <Popover placement={ 'bottom' } content={ content } onVisibleChange={ () => refetch() }>
       <h2 style={ { cursor: 'pointer' } }>项目</h2>
     </Popover>
   )

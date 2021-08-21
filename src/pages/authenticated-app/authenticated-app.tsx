@@ -11,6 +11,7 @@ import { ProjectDetail } from '../project'
 import { resetRoute } from '../../utils'
 import { ProjectModal } from 'pages/project-list/project-modal'
 import { ProjectPopover } from 'components/project-popover'
+import { UserPopover } from 'components/user-popover'
 
 export const AuthenticatedApp = () => {
 
@@ -40,7 +41,7 @@ const PageHeader = () => {
           <SoftwareLogo width={ '18rem' } color={ 'rgb(38, 132, 255)' } />
         </Button>
         <ProjectPopover />
-        <h2>用户</h2>
+        <UserPopover />
       </HeaderLeft>
       <HeaderRight>
         <User />
