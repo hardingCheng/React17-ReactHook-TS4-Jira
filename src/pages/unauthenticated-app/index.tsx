@@ -1,16 +1,16 @@
-import React,{ useState } from 'react'
+import React, { useState } from 'react'
 import { Login } from './login'
 import { Signup } from './signup'
-import { Button,Card,Divider,Typography } from 'antd'
+import { Button, Card, Divider, Typography } from 'antd'
 import styled from '@emotion/styled'
 import logo from 'assets/logo.svg'
 import left from 'assets/left.svg'
 import right from 'assets/right.svg'
 
-export const UnauthenticatedApp = () => {
+export default function UnauthenticatedApp() {
   // 用来切换登录注册状态的
-  const [ isRegister,setIsRegister ] = useState( true )
-  const [ error,setError ] = useState<Error | null>( null )
+  const [ isRegister, setIsRegister ] = useState( true )
+  const [ error, setError ] = useState<Error | null>( null )
 
   return (
     <Container>

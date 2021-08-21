@@ -13,7 +13,7 @@ import { ProjectModal } from 'pages/project-list/project-modal'
 import { ProjectPopover } from 'components/project-popover'
 import { UserPopover } from 'components/user-popover'
 
-export const AuthenticatedApp = () => {
+export default function AuthenticatedApp() {
 
   return (
     <Container>
