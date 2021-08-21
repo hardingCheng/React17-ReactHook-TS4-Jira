@@ -1,6 +1,7 @@
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useProject } from 'utils/use-project'
+import { useTask } from 'utils/use-task'
 import { useUrlQueryParam } from 'utils/use-url-query-param'
 
 // 获取到当前的url中的project的id
@@ -39,3 +40,26 @@ export const useTasksSearchParams = () => {
 
 
 export const useTasksQueryKey = () => [ 'tasks', useTasksSearchParams() ]
+
+export const useTasksModal = () => {
+  const [ { editingTaskId }, setEditingTaskId ] = useUrlQueryParam( [
+    'editingTaskId',
+  ] )
+  const { data: editingTask, isLoading } = useTask( Number( editingTaskId ) )
+  const startEdit = useCallback(
+    ( id: number ) => {
+      setEditingTaskId( { editingTaskId: id } )
+    },
+    [ setEditingTaskId ],
+  )
+  const close = useCallback( () => {
+    setEditingTaskId( { editingTaskId: '' } )
+  }, [ setEditingTaskId ] )
+  return {
+    editingTaskId,
+    editingTask,
+    startEdit,
+    close,
+    isLoading,
+  }
+}

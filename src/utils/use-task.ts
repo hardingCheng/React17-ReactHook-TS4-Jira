@@ -16,7 +16,6 @@ export const useTasks = ( param?: Partial<Task> ) => {
 
 export const useAddTask = ( queryKey: QueryKey ) => {
   const client = useHttp()
-
   return useMutation(
     ( params: Partial<Task> ) =>
       client( `tasks`, {

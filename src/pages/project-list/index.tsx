@@ -46,6 +46,7 @@ export const ProjectListScreen = () => {
 ProjectListScreen.whyDidYouRender = false
 
 const Container = styled.div`
+  flex: 1;
   padding: 3.2rem;
 `
 
