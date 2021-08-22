@@ -6,7 +6,7 @@ import { ProjectListScreen } from 'pages/project-list'
 import { useAuth } from '../context/auth-context'
 // 可以把svg当做组件使用
 import { ReactComponent as SoftwareLogo } from 'assets/software-logo.svg'
-import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { ProjectDetail } from '../project'
 import { resetRoute } from '../../utils'
 import { ProjectModal } from 'pages/project-list/project-modal'
@@ -17,17 +17,15 @@ export default function AuthenticatedApp() {
 
   return (
     <Container>
-      <Router>
-        <PageHeader />
-        <Main>
-          <Routes>
-            <Route path={ '/projects' } element={ <ProjectListScreen /> } />
-            <Route path={ '/projects/:projectId/*' } element={ <ProjectDetail /> } />
-            <Navigate to={ '/projects' } />
-          </Routes>
-        </Main>
-        <ProjectModal />
-      </Router>
+      <PageHeader />
+      <Main>
+        <Routes>
+          <Route path={ '/projects' } element={ <ProjectListScreen /> } />
+          <Route path={ '/projects/:projectId/*' } element={ <ProjectDetail /> } />
+          <Navigate to={ '/projects' } />
+        </Routes>
+      </Main>
+      <ProjectModal />
     </Container>
   )
 }

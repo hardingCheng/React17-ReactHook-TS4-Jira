@@ -2,11 +2,12 @@ import { useHttp } from './http'
 import { QueryKey, useMutation, useQuery } from 'react-query'
 import { useAddConfig, useDeleteConfig, useEditConfig } from './use-optimistic-update'
 import { Project } from '../type/projects'
+import { cleanObject } from 'utils'
 
 export const useProjects = ( param?: Partial<Project> ) => {
   const http = useHttp()
   // 'projects', param 谁变化 就触发
-  return useQuery<Project[], Error>( [ 'projects', param ], () => http( 'projects', { data: param } ) )
+  return useQuery<Project[], Error>( [ 'projects', cleanObject( param ) ], () => http( 'projects', { data: param } ) )
 }
 // React Hook 只能放在最顶层
 export const useEditProject = ( queryKey: QueryKey ) => {

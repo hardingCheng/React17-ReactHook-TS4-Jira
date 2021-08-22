@@ -16,10 +16,10 @@ yarn add @craco/craco
 "scripts": {
 -   "start": "react-scripts start",
 -   "build": "react-scripts build",
--   "test": "react-scripts test",
+-   "__tests__": "react-scripts __tests__",
 +   "start": "craco start",
 +   "build": "craco build",
-+   "test": "craco test",
++   "__tests__": "craco __tests__",
 }
 ```
 
@@ -47,22 +47,22 @@ https://github.com/bvaughn/react-error-boundary
 3. useEffect使用的时候注意
 
 ```js
-import React,{ useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./styles.css";
 // 基本类型，可以放到依赖里；组件状态，可以放到依赖里（useState创建的）；非组件状态的   对象（对象，数组，函数等） ，绝不可以放到依赖里，会造成死循环渲染
 export default function App() {
   // 当obj是基本类型的时候，就不会无限循环
   // 当 obj是对象的时候，就会无限循环
   // 当 obj 是对象的state时，不会无限循环
-  const [ obj,setObj ] = useState( { name: "Jack" } );
+  const [ obj, setObj ] = useState( { name: "Jack" } );
   // const obj = 1;
   // const obj = {name: 'Jack'}
-  const [ num,setNum ] = useState( 0 );
+  const [ num, setNum ] = useState( 0 );
 
   useEffect( () => {
     console.log( "effect" );
     setNum( num + 1 );
-  },[ obj ] );
+  }, [ obj ] );
 
   return (
     <div className="App">
