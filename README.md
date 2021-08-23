@@ -78,3 +78,11 @@ export default function App() {
 
 默认情况下, 父组件的状态(state)发生变化,不仅会重新渲染自己,还会重新渲染其子组件。 在写自定义hook的时候要返回函数的时候（useCallback），
 当我们使用了非基本类型的依赖，我们使用useMemo和useCallback来限制住
+
+## 跨组件状态总结
+### 小场面
+**状态提升**/组合组件
+### 缓存状态
+**react-query**/software
+### 客户端状态
+**url**/redux/**context**
